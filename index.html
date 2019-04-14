@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<html>
+<head>
+	<title>Make - Pwentk</title>
+	<!-- Semantic-UI -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+	<!-- FabricJS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/2.6.0/fabric.js"></script>
+	<!-- Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,700,900" rel="stylesheet">
+
+	<style>
+	body{
+		font-family: "Lato", "Noto Sans KR", sans-serif;
+		font-weight: 400;
+	}
+	#main{
+		padding: 10px;
+	}
+	.canvas-container canvas{
+		border-radius: .28571429rem;
+	}
+	#mainCanvas{
+		border: 1px solid rgba(34,36,38,.15);
+		box-shadow: 0 1px 2px 0 rgba(34,36,38,.15);
+		background-color: white;
+	}
+	.block{
+		stroke-width:0.3px;
+		stroke-linecap:butt;
+	}
+	.basic{
+		fill:#6691e8; 
+		stroke:#81a7f4;
+	}
+	.blockText{ 
+		font: 6px "Lato", "Noto Sans KR", sans-serif;
+		fill: auto;
+		user-select: none;
+	}
+</style>
+</head>
+<body style="height: 0;background: linear-gradient(to right, #eb58ab, #fcd528);background-attachment: fixed;">
+	<div id="app" @click="contextClose">
+		<sui-menu vertical 
+		style="position:absolute;z-index:102;width:auto;" 
+		:style="{left:contextPos.left+'px', top:contextPos.top+'px'}" 
+		v-if="context">
+		<sui-menu-item 
+		@click="deleteScene"
+		>
+		장면 삭제하기
+	</sui-menu-item>
+</sui-menu>
+<sui-menu fixed borderless inverted compact style="display:block" id="topbar">
+	<sui-container fluid>
+		<a is="sui-menu-item" style="padding:0 10px 0 10px;">
+			<img src="logo.svg" style="height:25px;">
+		</a>
+		<sui-menu-menu position="right">
+			<a is="sui-menu-item">
+				Lorem!
+			</a>
+		</sui-menu-menu>
+	</sui-container>
+	<sui-container fluid>
+		<sui-menu secondary pointing inverted>
+			<a is="sui-menu-item" 
+			v-for="(scene, index) in scenes"
+			:active="activeScene == index" 
+			:content="scene.name"
+			@click.left="setNowScene(index)"
+			@click.right="contextOpen($event, index)"
+			/>
+			<a is="sui-menu-item"
+			@click="newScene">
+			<sui-icon name="plus"/>
+		</a>
+	</sui-menu>
+</sui-menu>
+</sui-segment>
+<div id="main" :style="{'margin-top': topMargin, height: mainHeight, padding: '0.3rem'}">
+	<sui-grid :columns="2" stackable stretched style="height:100%;margin:0;">
+		<sui-grid-column :width="6" style="padding:0.5rem;">
+			<div id="canvases">
+				<canvas id="mainCanvas" height="360" width="640"></canvas>
+			</div>
+		</sui-grid-column>
+		<sui-grid-column :width="10" style="min-height:350px;padding:0.5rem;">
+			<sui-segment style="padding:0;">
+				<svg class="ws" id="ws" style="width:100%;height:100%;">
+					<component v-for="(block, index) in blocks" is="pwentk-block" :path="block.getPath()" :key="index" :text="block.template" :index="index"></component>
+				</svg>
+			</sui-segment>
+		</sui-grid-column>
+	</sui-grid>
+</div>
+</div>
+<script src="dist/app.js"></script>
+</body>
+</html>

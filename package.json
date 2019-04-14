@@ -1,0 +1,26 @@
+{
+  "name": "pwedit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "pwentkFabric.js",
+  "scripts": {
+    "build": "webpack",
+    "serve": "webpack-dev-server --open --progress"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "babel-loader": "^8.0.5",
+    "webpack": "^4.30.0",
+    "webpack-cli": "^3.3.0",
+    "webpack-dev-server": "^3.3.1"
+  },
+  "dependencies": {
+    "interactjs": "^1.4.0-rc.9",
+    "pwentk": "0.0.0",
+    "semantic-ui-vue": "^0.8.1",
+    "vue": "^2.6.10"
+  }
+}
